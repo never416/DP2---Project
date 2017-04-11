@@ -1,69 +1,97 @@
 
-<HTML XMLns="http://www.w3.org/1999/xHTML"> 
-<body>
-<H1>ShipOnline System Login Page</H1>
+<?php 
+
+if(isset($_SESSION['$login_user'])){
+header("location: request.php");
+}
+$error="";
+
+// define variables and set to empty values
+
+ $nameErr = $passErr = $emailErr = $phoneErr = $cpassErr = "";
+$LoginNumber = $LoginPassword = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (empty($_POST['custno'])) {
+    $nameErr = "Customer Number is required";
+    //echo $nameErr;
+  } else {
+    $LoginNumber=isset($_POST['custno']) ? $_POST['custno'] : "";
+  }
+
+  if (empty($_POST['lpassword'])) {
+    $passErr = "Password is required";
+    //echo $passErr;
+  } else {
+     $LoginPassword = isset($_POST['lpassword']) ? $_POST['lpassword'] : "";
+  }
+
+  
+
+}
+?>
+
+
+
+<H1>ShipOnline System Registration Page</H1>
 <br/>
 
-<form>
-  Customer Number: <input type="text" name="CustNo"> <br/>
-  Password: <input type="text" name="password"> <br/>
-  <input type="submit" value="Register" /> <br/>
+<form action="" method="post">
+  Customer Number: <input type="text" name="custno"><span class="error">* <?php echo $nameErr;?></span> <br/> 
+  Password: <input type="text" name="lpassword"> <span class="error">* <?php echo $passErr;?></span> <br/> 
+  
+  <input type="submit" value="Login" /> <br/>
 </form>
-</body> 
+
+
 <?php 
-   $servername = "feenix-mariadb.swin.edu.au";
-$username = "s414581x";
-$password = "141083";
-$dbname = "s414581x_db";
+session_start(); //Starting a session
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
+//if (isset($_POST['submit'])) {
+  //if (empty($_POST['custno']) || empty($_POST['password'])) {
+    //$error = "Customer Number or Password is empty";
+    //}
+//else
 
-$custno = $_GET['CustNo'];
-  $password = $_GET['password'];
- 
- 
-  $qz = "SELECT id FROM customer where username='".$username."' and password='".$password."'" ;
-  $qz = str_replace("\'","",$qz);
-  $result = mysqli_query($conn,$qz);
-  while($row = mysqli_fetch_array($result))
-    {
-    echo $row['id'];
-    }
-  mysqli_close($conn);
+if (!empty($LoginNumber) && !empty($LoginPassword))
+{
+  //$custno = $_POST['custno'];
+  //$password = $_POST['password'];
 
----------------------
-  session_start();
-//3. If the form is submitted or not.
-//3.1 If the form is submitted
-if (isset($_POST['CustNo']) and isset($_POST['password'])){
-//3.1.1 Assigning posted values to variables.
-$username = $_POST['username'];
-$password = $_POST['password'];
-//3.1.2 Checking the values are existing in the database or not
-$query = "SELECT * FROM `user` WHERE username='$username' and password='$password'";
- 
-$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-$count = mysqli_num_rows($result);
-//3.1.2 If the posted values are equal to the database values, then session will be created for the user.
-if ($count == 1){
-$_SESSION['username'] = $username;
-}else{
-//3.1.3 If the login credentials doesn't match, he will be shown with an error message.
-$fmsg = "Invalid Login Credentials.";
+  $servername = "feenix-mariadb.swin.edu.au";
+  $username = "s414581x";
+  $password = "141083";
+  $dbname = "s414581x_db";
+
+  // Create connection
+  $conn = mysql_connect($servername, $username, $password);
+  
+  $db = mysql_select_db($dbname, $conn);
+
+  //$custno = stripslashes($custno);
+  //$lpassword = stripslashes($lpassword);
+  //$custno = mysql_real_escape_string($custno);
+  //$lpassword = mysql_real_escape_string($lpassword);
+
+  
+
+  $query = mysql_query("SELECT * FROM customer where customer_number='$LoginNumber' and password='$LoginPassword'", $conn) ;
+  $rows = mysql_num_rows($query);
+  if ($rows == 1) {
+  $_SESSION['$login_user']=$LoginNumber; // Initializing Session
+  header("location: request.php"); // Redirecting To Other Page
+  } else {
+  echo "Customer Number or Password is invalid";
+  }
+  mysql_close($conn); // Closing Connection
+
 }
-}
-//3.1.4 if the user is logged in Greets the user with message
-if (isset($_SESSION['username'])){
-$username = $_SESSION['username'];
-echo "Hai " . $username . "
-";
-echo "This is the Members Area
-";
-echo "<a href='logout.php'>Logout</a>";
+
+
  
-}else{
-//3.2 When the user visits the page first time, simple login form will be displayed.
+ 
+  
+
+
 ?>
 </HTML>
