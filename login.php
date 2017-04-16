@@ -1,97 +1,79 @@
 
 <?php 
-
+//if SESSION is set as $login_user variable and pass it to request.php
 if(isset($_SESSION['$login_user'])){
 header("location: request.php");
 }
-$error="";
+
 
 // define variables and set to empty values
-
- $nameErr = $passErr = $emailErr = $phoneErr = $cpassErr = "";
 $LoginNumber = $LoginPassword = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (empty($_POST['custno'])) {
-    $nameErr = "Customer Number is required";
-    //echo $nameErr;
-  } else {
-    $LoginNumber=isset($_POST['custno']) ? $_POST['custno'] : "";
-  }
-
-  if (empty($_POST['lpassword'])) {
-    $passErr = "Password is required";
-    //echo $passErr;
-  } else {
-     $LoginPassword = isset($_POST['lpassword']) ? $_POST['lpassword'] : "";
-  }
-
   
+    $LoginNumber= isset($_POST['staffno']) ? $_POST['staffno'] : "";
+    $LoginPassword = isset($_POST['lpassword']) ? $_POST['lpassword'] : "";
+  }
 
-}
 ?>
 
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+<meta charset="utf-8" />
 
-<H1>ShipOnline System Registration Page</H1>
+<meta name="author" content="Thao Nguyen" />
+<title>Login Page</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<H1>Login</H1>
 <br/>
 
 <form action="" method="post">
-  Customer Number: <input type="text" name="custno"><span class="error">* <?php echo $nameErr;?></span> <br/> 
+  Staff Number: <input type="text" name="staffno"><span class="error">* <?php echo $nameErr;?></span> <br/> 
   Password: <input type="text" name="lpassword"> <span class="error">* <?php echo $passErr;?></span> <br/> 
   
   <input type="submit" value="Login" /> <br/>
 </form>
-
+ 
 
 <?php 
-session_start(); //Starting a session
+//Starting a session
+session_start(); 
 
-//if (isset($_POST['submit'])) {
-  //if (empty($_POST['custno']) || empty($_POST['password'])) {
-    //$error = "Customer Number or Password is empty";
-    //}
-//else
-
+//if fields are not empty, execute
 if (!empty($LoginNumber) && !empty($LoginPassword))
 {
-  //$custno = $_POST['custno'];
-  //$password = $_POST['password'];
 
   $servername = "feenix-mariadb.swin.edu.au";
   $username = "s414581x";
-  $password = "141083";
+  $password = "";
   $dbname = "s414581x_db";
 
   // Create connection
   $conn = mysql_connect($servername, $username, $password);
-  
   $db = mysql_select_db($dbname, $conn);
 
-  //$custno = stripslashes($custno);
-  //$lpassword = stripslashes($lpassword);
-  //$custno = mysql_real_escape_string($custno);
-  //$lpassword = mysql_real_escape_string($lpassword);
-
-  
-
-  $query = mysql_query("SELECT * FROM customer where customer_number='$LoginNumber' and password='$LoginPassword'", $conn) ;
+  //SQL query to select the correct table row where the customer number and password match 
+  $query = mysql_query("SELECT * FROM staff where staff_number='$LoginNumber' and password='$LoginPassword'", $conn) ;
   $rows = mysql_num_rows($query);
   if ($rows == 1) {
   $_SESSION['$login_user']=$LoginNumber; // Initializing Session
-  header("location: request.php"); // Redirecting To Other Page
-  } else {
-  echo "Customer Number or Password is invalid";
+  header("location: records.php"); // Redirecting to records.php
+  
+  }
+  else {
+    //If no user is found, show error message
+    echo "Staff Number or Password is invalid";
   }
   mysql_close($conn); // Closing Connection
 
 }
 
-
- 
- 
-  
-
-
 ?>
+</body>
 </HTML>
