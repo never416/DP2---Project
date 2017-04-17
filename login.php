@@ -59,7 +59,7 @@ if (!empty($LoginNumber) && !empty($LoginPassword))
   $db = mysql_select_db($dbname, $conn);
 
   //SQL query to select the correct table row where the customer number and password match 
-  $query = mysql_query("SELECT * FROM staff where staff_number='$LoginNumber' and password='$LoginPassword'", $conn) ;
+  $query = mysql_query("SELECT * FROM staff where staff_id='$LoginNumber' and password='$LoginPassword'", $conn) ;
   $rows = mysql_num_rows($query);
   if ($rows == 1) {
   $_SESSION['$login_user']=$LoginNumber; // Initializing Session
