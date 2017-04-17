@@ -1,0 +1,74 @@
+#header .navbar {
+		background: #2e3949;
+		border-radius: 0px;
+		margin-bottom: 0px;
+}
+#header{
+		background: #2e3949;
+}
+#header .topnavbar {
+		height: 100px;
+}
+#header .navbar-header a {
+		font-family: "Pacifico", Sans-serif;
+		font-size: 2.2em;
+		color: white;
+		line-height: 60px;
+}
+
+#header .navbar-toggle, #header .nav {
+		margin-top: 35px;
+}
+
+#header .navbar-fixed-top .navbar-toggle,
+#header .navbar-fixed-top .nav {
+		margin-top: 15px;
+}
+#header .navbar-fixed-top  .navbar-header a {
+		line-height: 30px;
+		text-decoration: none;
+}
+
+#header .navbar-nav .active a,
+#header .navbar-nav a:hover {
+		background-color: #e96269;
+}
+
+#header .navbar-nav a,
+#header .navbar-nav .active a {
+		font-family: "PT Sans";
+		font-weight: bold;
+		padding: 5px 20px;
+		margin-right: 5px;
+		border-radius: 15px;
+		color: white;
+		font-size: 1.25em;
+}
+
+#header .navbar-nav a {
+		background-color: #2e3949;
+
+		-webkit-transition: background-color .2s;
+		-moz-transition: background-color .2s;
+		-o-transition: background-color .2s;
+		-ms-transition: background-color .2s;
+		transition: background-color .2s;
+}
+
+#header .navbar-nav .active a:hover {
+		background-color: #fb3c46;
+
+		-webkit-transition: background-color .2s;
+		-moz-transition: background-color .2s;
+		-o-transition: background-color .2s;
+		-ms-transition: background-color .2s;
+		transition: background-color .2s;
+}
+#header .navbar-nav a:active {
+		background-color: red;
+}
+#header .navbar-header i {
+		font-weight: bold;
+		color: white;
+		font-size: 1.5em;
+}
