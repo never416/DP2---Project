@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 //if SESSION is set as $login_user variable and pass it to request.php
 if(isset($_SESSION['$login_user'])){
 header("location: request.php");
@@ -10,9 +10,9 @@ header("location: request.php");
 $LoginNumber = $LoginPassword = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  
-    $LoginNumber= isset($_POST['staffno']) ? $_POST['staffno'] : "";
-    $LoginPassword = isset($_POST['lpassword']) ? $_POST['lpassword'] : "";
+
+	$LoginNumber= isset($_POST['staffno']) ? $_POST['staffno'] : "";
+	$LoginPassword = isset($_POST['lpassword']) ? $_POST['lpassword'] : "";
   }
 
 ?>
@@ -34,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br/>
 <button id="month">Monthly Sales report</button><button id="week">Weekly Sales report</button><button id="day">Daily Sales report</button>
 
-<?php 
+<?php
 //Starting a session
-session_start(); 
+session_start();
 
 //if fields are not empty, execute
 if (!empty($LoginNumber) && !empty($LoginPassword))
@@ -51,17 +51,17 @@ if (!empty($LoginNumber) && !empty($LoginPassword))
   $conn = mysql_connect($servername, $username, $password);
   $db = mysql_select_db($dbname, $conn);
 
-  //SQL query to select the correct table row where the customer number and password match 
+  //SQL query to select the correct table row where the customer number and password match
   $query = mysql_query("SELECT * FROM staff where staff_id='$LoginNumber' and password='$LoginPassword'", $conn) ;
   $rows = mysql_num_rows($query);
   if ($rows == 1) {
   $_SESSION['$login_user']=$LoginNumber; // Initializing Session
   header("location: records.php"); // Redirecting to records.php
-  
+
   }
   else {
-    //If no user is found, show error message
-    echo "Staff Number or Password is invalid";
+	//If no user is found, show error message
+	echo "Staff Number or Password is invalid";
   }
   mysql_close($conn); // Closing Connection
 
@@ -69,4 +69,4 @@ if (!empty($LoginNumber) && !empty($LoginPassword))
 
 ?>
 </body>
-</HTML>
+</html>
