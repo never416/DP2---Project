@@ -1,7 +1,7 @@
 
 <HTML XMLns="http://www.w3.org/1999/xHTML"> 
 <body>
-<H1>Add ssales record</H1>
+<H1>Add sales record</H1>
 <br/>
 
 <form>
